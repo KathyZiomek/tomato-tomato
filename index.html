@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!--CSS Stylesheet-->
+        <link rel="stylesheet" href="css/style.css">
+
+        <title>Pomodoro Timer</title>
+    </head>
+    <body onload="createTimes();">
+        <header id="header">
+
+        </header>
+        <!--
+        form for user to identify how long they want to work and how long breaks will be
+        -->
+        <div id="userForm">
+            <p>How long do you want your study sessions to be?</p>
+            <input type="text" id="studySessionLength" value=25><br>
+            <p>How long do you want your breaks to be?</p>
+            <input type="text" id="breakLength" value=5><br>
+
+            <!--submit button-->
+            <button type="submit" onclick="submitTime()">Submit</button>
+        </div>
+
+        <!--dynamically generated start studying button will go in this div-->
+        <div id="buttons"></div>
+
+        <!--testing output-->
+        <div id="timerOutput" class="display-1"></div>
+
+
+        
+
+        <!--JS Files-->
+        <script src="js/countdown.js"></script>
+        <script src="js/classes.js"></script>
+        <script src="js/helpers.js"></script>
+    </body>
+</html>
