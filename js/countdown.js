@@ -28,6 +28,10 @@ var iterator = TimeSegments[Symbol.iterator]();
 
 //create a function that will be triggered when the "Start Studying" button is clicked
 function handleTimer() {
+
+    //get the media API to play music while the timer is running
+    media.play();
+
     //identify the first time segment using the iterator
     currentSegment = iterator.next();
     console.log(currentSegment);
@@ -63,8 +67,17 @@ function arrayHelper() {
 
         if (currentSegment.done === true) {
             console.log("iterator is done");
-            //clear the div
-            $gel("mainPage").innerHTML = "";
+            //Tell the user that the timer is done
+            $gel("timerOutputDiv").innerHTML = "Done!";
+            //empty the button div
+            $gel("buttons").innerHTML = "";
+            //create a button that will take the user to the results page
+            var goToResultsButton = document.createElement("button");
+            goToResultsButton.innerText = "See Your Statistics";
+            goToResultsButton.type = "submit";
+            goToResultsButton.setAttribute("onclick", "seeStatistics();");
+            goToResultsButton.setAttribute("class", "btn btn-danger mt-4");
+            $gel("buttons").appendChild(goToResultsButton);
         }
         else if (currentSegment.done !== true) {
             console.log(currentSegment);

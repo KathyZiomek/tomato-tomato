@@ -1,0 +1,3 @@
+function seeStatistics() {
+    media.stop();
+}
