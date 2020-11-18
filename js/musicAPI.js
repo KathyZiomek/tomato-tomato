@@ -15,9 +15,5 @@ function useMedia() {
         $gel("mediaOutput").innerHTML = "There was a problem. Error code " + error.code;
     }
 
-     function stopMedia() {
-        media.stop();
-    }
-
     //media.play();
 }
