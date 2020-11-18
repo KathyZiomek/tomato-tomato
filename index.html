@@ -26,7 +26,6 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-        <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' gap:; style-src 'self' 'unsafe-inline'; media-src *" />
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css" >
@@ -37,7 +36,7 @@
 
         <title>Pomodoro Timer</title>
     </head>
-    <body onload="createTimes();">
+    <body>
         <header id="header">
 
         </header>
@@ -49,29 +48,19 @@
                 <h1 class="text-danger mt-2">Tomato/Tomato</h1>
                 <p class="lead mt-2">a pomodoro technique app</p>
     
-                <button type="submit" class="btn btn-danger mt-4" onclick="">Choose Study Options</button>
+                <button type="submit" id="choose-study-options" class="btn btn-danger mt-4">Choose Study Options</button>
             </div>
 
-            <div id="timerOutputDiv">
+            <div id="timerOutputDiv" class="display-1 text-center"></div>
+            <div id="buttons" class="text-center"></div>
 
-            </div>
+            <!--Status bar - add this once everything else is done
+            <div id="statusBar" class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+            </div>-->
 
-            <div id="resultsOutputDiv">
-
-            </div>
+            <div id="resultsOutputDiv"></div>
         </main>
-
-
-
-        <div id="userForm">
-            <p>How long do you want your study sessions to be?</p>
-            <input type="text" id="studySessionLength" value=25><br>
-            <p>How long do you want your breaks to be?</p>
-            <input type="text" id="breakLength" value=5><br>
-
-            <!--submit button-->
-            <button type="submit" onclick="submitTime()">Submit</button>
-        </div>
 
         <!--dynamically generated start studying button will go in this div-->
         <div id="buttons"></div>
@@ -87,5 +76,6 @@
         <script src="js/countdown.js"></script>
         <script src="js/classes.js"></script>
         <script src="js/helpers.js"></script>
+        <script src="js/index.js"></script>
     </body>
 </html>

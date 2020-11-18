@@ -10,33 +10,21 @@ function createTimes() {
     //create three Pomodoro cycles
     for (var i = 1; i <= 6; i++) {
         if (i % 2 === 1) {
-            TimeSegments.push(new TimeSegment("Study Session", 25));
+            TimeSegments.push(new TimeSegment("Study Session", studyTime));
         }
         else if (i % 2 === 0) {
-            TimeSegments.push(new TimeSegment("Break", 5)); 
+            TimeSegments.push(new TimeSegment("Break", breakTime)); 
         }
     }
     //test the data
     console.log(TimeSegments);
+
+    //call the handleTimer function
+    handleTimer();
 }
 
 //create an iterator variable using TimeSegments.iterator
 var iterator = TimeSegments[Symbol.iterator]();
-
-//using alert API, update the TimeSegments objects
-
-
-//create a function that will be invoked when the submit button submits the user study length
-function submitTime() {
-    //create a new button to start the countdown
-    var startButton = document.createElement("button");
-    startButton.innerText = "Start Studying";
-    startButton.type = "submit";
-    //connect the button to another function that starts the countdown
-    startButton.setAttribute("onclick", "handleTimer();");
-    //output the button to the webpage
-    $gel("buttons").appendChild(startButton);
-}
 
 //create a function that will be triggered when the "Start Studying" button is clicked
 function handleTimer() {
@@ -47,23 +35,16 @@ function handleTimer() {
     console.log(timeLeft);
 
     //empty the page contents
-    $gel("userForm").innerHTML = "";
-    $gel("buttons").innerHTML = "";
+    $gel("mainPage").innerHTML = "";
     //call the decreaseSeconds function through the arrayHelper
     arrayHelper();
-
-    //create a stop button
-    var stopButton = document.createElement("button");
-    stopButton.innerText = "Stop";
-    stopButton.type = "submit";
-    stopButton.setAttribute("onclick", "stopTimer();");
-    $gel("buttons").appendChild(stopButton);
 
     //create a skip button
     var skipButton = document.createElement("button");
     skipButton.innerText = "Skip";
     skipButton.type = "submit";
     skipButton.setAttribute("onclick", "skipTimer();");
+    skipButton.setAttribute("class", "btn btn-danger mt-4 pr-4 pl-4");
     $gel("buttons").appendChild(skipButton);
 }
 
@@ -83,9 +64,7 @@ function arrayHelper() {
         if (currentSegment.done === true) {
             console.log("iterator is done");
             //clear the div
-            $gel("timerOutput").innerHTML = "";
-            //clear the buttons
-            $gel("buttons").innerHTML = "";
+            $gel("mainPage").innerHTML = "";
         }
         else if (currentSegment.done !== true) {
             console.log(currentSegment);
@@ -117,7 +96,7 @@ function arrayHelper() {
         
         //output in a formatted way (minutes:seconds)
         //output using TimeSegments methods
-        $gel("timerOutput").innerHTML = mins + ":" + secs;
+        $gel("timerOutputDiv").innerHTML = mins + ":" + secs;
         //update the page title with the time
         document.title = mins + ":" + secs;
 
