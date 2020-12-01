@@ -2,6 +2,11 @@
 var timeLeft = 0;
 var currentSegment;
 var timer;
+
+//create a variable to store the total time studied
+//this variable will be used to store the total time studied in the Firebase database
+var totalTimeStudied = 0;
+
 //create an empty array to contain the time objects
 var TimeSegments = [];
 
@@ -18,6 +23,16 @@ function createTimes() {
     }
     //test the data
     console.log(TimeSegments);
+
+    //get the amount of time studied
+    for (var i = 0; i < TimeSegments.length; i++) {
+        if (TimeSegments[i].type == "Study Session") {
+            totalTimeStudied += parseInt(TimeSegments[i].minutes);
+        }
+    }
+
+    //save the amount of time it will be to the Firebase database
+    saveTimeStudiedWithFirebase();
 
     //call the handleTimer function
     handleTimer();

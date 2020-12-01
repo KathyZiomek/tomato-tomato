@@ -33,7 +33,7 @@ function registerInFirebase() {
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function(firebaseUser) {
-            alert('Thank you for registering!'); 
+            alert('Thank you for registering!\nPlease log in.'); 
 
             //save the user to the Firebase Database
             saveDataWithFirebase();
@@ -75,11 +75,12 @@ function loginWithFirebase() {
         .then(function(firebaseUser) {
             alert('Login successful!'); 
             
-            $gel('loginForm').innerHTML = "";
+            // load data 
+            retrieveDataFromFirebase();
             $gel('choose-study-options').classList.remove("hiddenClass");
             
-            // load data
-            //retrieveDataFromFirebase();
+
+
         })
         //add validation depending on the error message
         .catch(function(error) {
@@ -126,18 +127,32 @@ function saveDataWithFirebase() {
 
     var userId = firebase.auth().currentUser.uid;
 
-     
     // SAVE DATA TO REALTIME DB
     // Get a reference to the database service
     var database = firebase.database();
 
     database.ref('users/' + userId).set({
-        test: "test"
+        //test: "test"
+        username: $gel('username').value
         //whenever I want to add something to the Firebase database for storage, add it here
         //could get information from a textbox and add it with a UID
         //text: $gel('uid').value
     });
 }
+
+/*create a function that will store the amount of time a user has spent studying in the Firebase database*/
+function saveTimeStudiedWithFirebase() {
+    var userId = firebase.auth().currentUser.uid;
+
+    // SAVE DATA TO REALTIME DB
+    // Get a reference to the database service
+    var database = firebase.database();
+
+    database.ref('studyData/' + userId).set({
+        timeStudied: totalTimeStudied
+    });
+}
+
 
 function retrieveDataFromFirebase() {
     // *********************************************************************
@@ -148,10 +163,10 @@ function retrieveDataFromFirebase() {
     // -- https://firebase.google.com/docs/firestore/query-data/listen
     // *********************************************************************
     var userId = firebase.auth().currentUser.uid;
-    
-    
+        
     // LOAD DATA FROM REALTIME DB
     firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-        $gel('uid').value = snapshot.val().text;
+        //$gel('uid').value = snapshot.val().text;
+        $gel('loginForm').innerHTML = "Welcome back, " + snapshot.val().username + "!";
     });
 }
