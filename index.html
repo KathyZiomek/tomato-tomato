@@ -29,10 +29,10 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css" >
-
         <!--CSS Stylesheet-->
         <link rel="stylesheet" href="css/style.css">
         <!--<link rel="stylesheet" type="text/css" href="css/index.css" />-->
+
 
         <title>Pomodoro Timer</title>
     </head>
@@ -48,7 +48,22 @@
                 <h1 class="text-danger mt-2">Tomato/Tomato</h1>
                 <p class="lead mt-2">a pomodoro technique app</p>
     
-                <button type="submit" id="choose-study-options" class="btn btn-danger mt-4">Choose Study Options</button>
+                <div id="loginForm" class="mt-5">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input type="text" class="form-control" id="email" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter password">
+                    </div>
+                    
+                    <button type="submit" id="register" class="btn btn-danger pl-3 pr-3">Register</button>
+                    <button type="submit" id="login" class="btn btn-danger pl-4 pr-4"> Login </button>
+                </div>
+
+                <button type="submit" id="choose-study-options" class="btn btn-danger mt-4 hiddenClass">Choose Study Options</button>
+
             </div>
 
             <div id="timerOutputDiv" class="display-1 text-center"></div>
@@ -61,6 +76,7 @@
             <div id="mediaOutput"></div>
 
             <div id="resultsOutputDiv"></div>
+
         </main>
 
         <!--dynamically generated start studying button will go in this div-->
@@ -70,9 +86,33 @@
         <div id="timerOutput" class="display-1"></div>
 
 
+
+
+        <!--FireBase code-->
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use-->
+        <script src="js/firebase/firebase-auth.js"></script>
+        <script src="js/firebase/firebase-database.js"></script>
+
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyCVLAE7tGl4dgZH9l-B84RzXOA3Y8_ADXo",
+                authDomain: "tomato-tomato-30d24.firebaseapp.com",
+                databaseURL: "https://tomato-tomato-30d24.firebaseio.com",
+                projectId: "tomato-tomato-30d24",
+                storageBucket: "tomato-tomato-30d24.appspot.com",
+                messagingSenderId: "370145370341",
+                appId: "1:370145370341:web:858ae2edf125873bbe340c"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+        </script>
         
 
-        <!--JS Files-->
+        <!--external JS Files-->
         <script type="text/javascript" src="cordova.js"></script>
         <script src="js/countdown.js"></script>
         <script src="js/classes.js"></script>
@@ -80,6 +120,8 @@
         <script src="js/alertAPI.js"></script>
         <script src="js/storageAPI.js"></script>
         <script src="js/musicAPI.js"></script>
+        <script src="js/firebase.js"></script>
         <script src="js/onDeviceReadyFunction.js"></script>
+
     </body>
 </html>

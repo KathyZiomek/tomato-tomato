@@ -1,3 +1,32 @@
+/*styling for the main page*/
 #mainPage {
     margin-top: 40%;
 }
+
+/*add an animation keyframe*/
+@keyframes slideUp { 
+	0% { 
+		transform: translateY(200%);
+	} 
+	100% { 
+		transform: translateY(0); 
+	} 
+}
+
+/*adding styling to the login/register form*/
+/*also adding an animation to the login/register form*/
+#loginForm {
+    width: 60%;
+    margin: 0 20% 0 20%;
+
+    animation: 3s ease-out 0s 1 slideUp; 
+
+}
+
+/*create a class that will be applied to elements or content that need to be hidden*/
+.hiddenClass {
+    visibility: hidden;
+}
+
+
+
