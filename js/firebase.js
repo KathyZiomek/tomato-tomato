@@ -133,27 +133,10 @@ function saveDataWithFirebase() {
 
     database.ref('users/' + userId).set({
         test: "test"
+        //whenever I want to add something to the Firebase database for storage, add it here
+        //could get information from a textbox and add it with a UID
         //text: $gel('uid').value
     });
-    
-/*
-    // SAVE DATA TO FIRESTORE
-    var db = firebase.firestore(app);
-
-    db.collection('users').doc(userId).set(
-        {
-            text: $gel('uid').value,
-        }, 
-        { 
-            merge: true // set with merge set to true to make sure we don't blow away existing data we didnt intend to
-        }
-    )
-    .then(function() {
-        console.log("Document successfully written!");
-    })
-    .catch(function(error) {
-        console.error("Error writing document: ", error);
-    });*/
 }
 
 function retrieveDataFromFirebase() {
@@ -171,31 +154,4 @@ function retrieveDataFromFirebase() {
     firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
         $gel('uid').value = snapshot.val().text;
     });
-    
-/*
-    // LOAD DATA FROM FIRESTORE
-    var db = firebase.firestore(app);
-    var docRef = db.collection("users").doc(userId);
-
-    // read once from data store
-    docRef.get().then(function(doc) {
-        if (doc.exists) {
-            document.getElementById('some-data-textarea').value = doc.data().text
-            console.log("Document data:", doc.data());
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    });
-*/
-
-    // For real-time updates:
-    /*
-    docRef.onSnapshot(function(doc) {
-        document.getElementById('some-data-textarea').value = doc.data().text
-        console.log("Current data: ", doc.data());
-    });
-    */
 }
