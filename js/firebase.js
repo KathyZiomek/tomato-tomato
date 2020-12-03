@@ -33,11 +33,12 @@ function registerInFirebase() {
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function(firebaseUser) {
-            alert('Thank you for registering!\nPlease log in.'); 
+            alert('Thank you for registering!\nPlease log in:'); 
 
             //save the user to the Firebase Database
             saveDataWithFirebase();
 
+            $gel('username').value = '';
             $gel('email').value = '';
             $gel('password').value = '';
 
@@ -49,6 +50,9 @@ function registerInFirebase() {
             if (errorCode == 'auth/weak-password') {
                 alert('The password is too weak.');
             } 
+            else if (errorCode === 'auth/email-already-exists') {
+                alert('This email and/or username is already associated with an account.\nWould you like to login instead?');
+            } 
             else {
                 alert(errorMessage);
             }
@@ -58,14 +62,18 @@ function registerInFirebase() {
 }
 
 function loginWithFirebase() {
+    var username = $gel('email').value;  
     var email = $gel('email').value;
     var password = $gel('password').value;
 
-    if (email.length < 4) {
-      alert('Please enter an email address.');
+    if (username.length < 4) {
+      alert('Please enter a username.');
       return;
     }
-
+    if (email.length < 4) {
+        alert('Please enter an email address.');
+        return;
+      }
     if (password.length < 4) {
       alert('Please enter a password.');
       return;
@@ -73,12 +81,11 @@ function loginWithFirebase() {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(function(firebaseUser) {
-            alert('Login successful!'); 
             
             // load data 
             retrieveDataFromFirebase();
             $gel('choose-study-options').classList.remove("hiddenClass");
-            
+            alert('Login successful!'); 
 
 
         })
@@ -90,10 +97,7 @@ function loginWithFirebase() {
             if (errorCode === 'auth/wrong-password') {
                 alert('Wrong password.');
             } 
-            if (errorCode === 'auth/email-already-exists') {
-                alert('This email is already associated with an account.');
-            } 
-            if (errorCode === 'auth/user-not-found') {
+            else if (errorCode === 'auth/user-not-found') {
                 alert('This account does not exist. Would you like to register instead?');
             } 
             else {

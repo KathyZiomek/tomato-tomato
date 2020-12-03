@@ -1,6 +1,10 @@
 //create a variable to store the study and break times entered
 var studyTime = 0;
 var breakTime = 0;
+//create a variable that will store if strict mode has been enabled or not
+var strictModeEnabled = false;
+//create a variable that will change if strict mode has been enabled
+var useStrict = false;
 
 //create the function that handles the user entering in the study and break times
 function chooseStudyOptions() {
@@ -41,14 +45,46 @@ function chooseBreakOptions() {
 function breakPrompt(results) {
     if(results.buttonIndex === 1) {
         breakTime = parseInt(results.input1);
-        //call the confirmOptions function
-        confirmOptions();
+        //call the strictMode function
+        strictMode();
     }
     else {
         //tell the user they cancelled
         alert("Studying cancelled.")
     }
 } 
+
+
+//create a function that enables "strict mode" and is connected to the accelerometer function
+function strictMode() {
+    navigator.notification.confirm(
+        "Strict Mode sends you a notification if you are picking up your phone while you should be studying.",       //message
+        strictModeResults,                    //callback to invoke
+        "Enable strict mode?",       //title
+        ["Yes", "No"],           //buttonLabels
+    );
+}
+
+//create the function that processes the break results
+function strictModeResults(buttonIndex) {
+    if(buttonIndex === 1) {
+        //enable the strict mode variables
+        strictModeEnabled = true;
+        useStrict = true;
+        //call the function that enables watching the phone's movement
+        enableStrictMode();
+        //call the confirmOptions function 
+        confirmOptions();
+    }
+    else {
+        //strict mode stays disabled
+        strictModeEnabled = false;
+        useStrict = false;
+
+        //call the confirmOptions function 
+        confirmOptions();
+    }
+}
 
 //create the function that tells the user what they selected, and starts the timer
 function confirmOptions() {

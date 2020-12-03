@@ -95,6 +95,19 @@ function arrayHelper() {
             $gel("buttons").appendChild(goToResultsButton);
         }
         else if (currentSegment.done !== true) {
+            //check if the user has opted to use strict mode
+            if (strictModeEnabled === true) {
+                //check if it is a study or break time to enable or disable strict mode
+                if (currentSegment.value.type == "Study Session") {
+                    //study session: enable strict mode
+                    useStrict = true;
+                }
+                else if (currentSegment.value.type == "Break") {
+                    //break: disable strict mode
+                    useStrict = false;
+                }
+            }
+
             console.log(currentSegment);
             timeLeft = currentSegment.value.minsToSeconds();
             console.log(timeLeft);
