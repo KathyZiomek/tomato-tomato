@@ -1,11 +1,11 @@
-//create a variable that will store the time data
-var timeLeft = 0;
-var totalTime = 0;
-var currentSegment;
-var timer;
+//create several variables that will hold information related to the timer data and will be used for calculations and displaying information to the user
+var timeLeft = 0;       //decrements and is used to calculate the timer that is output to the screen
+var totalTime = 0;      //is generated at the beginning of the timer segment, and is used to generate the progress bar
+var currentSegment;     //is the variable that stores the iterator, and is used to iterate through the objects
+var timer;              //is the variable that stores the setTimeout function that counts down the time and outputs the time to the user
 
 //create a variable to store the total time studied
-//this variable will be used to store the total time studied in the Firebase database
+//this variable will be used to store the total time studied within the Firebase database
 var totalTimeStudied = 0;
 
 //create an empty array to contain the time objects
@@ -27,6 +27,7 @@ function createTimes() {
         $gel("resultsOutputDiv").innerHTML = "";
     }
     //create three Pomodoro cycles
+    //future versions of the app can have the number of Pomodoro cycles be selected by the user
     for (var i = 1; i <= 6; i++) {
         if (i % 2 === 1) {
             TimeSegments.push(new TimeSegment("Study Session", studyTime));
@@ -35,8 +36,8 @@ function createTimes() {
             TimeSegments.push(new TimeSegment("Break", breakTime)); 
         }
     }
-    //test the data
-    console.log(TimeSegments);
+    //uncomment to test the data, and see the class information
+    //console.log(TimeSegments);
 
     //get the amount of time studied
     for (var i = 0; i < TimeSegments.length; i++) {
@@ -51,8 +52,8 @@ function createTimes() {
     //save the amount of time it will be to the Firebase database
     saveTimeStudiedWithFirebase();
     //save the amount of time studied to the local database
+    //ideally, this value would also take into account whether the user skips the timer during a study session, which could be implemented in the future
     saveToDBStorage();
-
     //call the handleTimer function
     handleTimer();
 }
@@ -61,14 +62,13 @@ function createTimes() {
 function handleTimer() {
 
     //get the media API to play music while the timer is running
+    //ideally, this timer would only play music during a study session, or a user could opt to listen to music or not - that can be implemented in the future
     media.play();
 
     //identify the first time segment using the iterator
     currentSegment = iterator.next();
-    console.log(currentSegment);
     timeLeft = currentSegment.value.minsToSeconds();
     totalTime = currentSegment.value.minsToSeconds();
-    console.log(timeLeft);
 
     //empty the page contents
     $gel("mainPage").innerHTML = "";
@@ -83,6 +83,7 @@ function handleTimer() {
     skipButton.type = "submit";
     skipButton.setAttribute("onclick", "skipTimer();");
     skipButton.setAttribute("class", "btn btn-danger mt-4 pr-4 pl-4");
+    //append the skip button to the page
     $gel("buttons").appendChild(skipButton);
 
     //unhide the progress bar
@@ -93,9 +94,9 @@ function handleTimer() {
 }
 
 /*
-create a helper function that:
+create a function that:
 - converts the minutes to seconds
-- evaluates which item of the array we're on
+- evaluates which object we are on (i.e. either a study session or a break)
 - and increases the array counter
 */
 function arrayHelper() {
@@ -105,7 +106,9 @@ function arrayHelper() {
         currentSegment = iterator.next();
 
         if (currentSegment.done === true) {
-            console.log("iterator is done");
+            //uncomment for testing
+            //console.log("iterator is done");
+            
             //hide the progress bar
             $gel("progressBarID").classList.add("hiddenClass");
             $gel("progressBarDiv").classList.add("hiddenClass");
@@ -120,6 +123,7 @@ function arrayHelper() {
             goToResultsButton.type = "submit";
             goToResultsButton.setAttribute("onclick", "seeStatistics();");
             goToResultsButton.setAttribute("class", "btn btn-danger mt-4");
+            //append the button to the page
             $gel("buttons").appendChild(goToResultsButton);
         }
         else if (currentSegment.done !== true) {
@@ -136,11 +140,9 @@ function arrayHelper() {
                 }
             }
 
-            console.log(currentSegment);
-            totalTime = currentSegment.value.minsToSeconds();
-            timeLeft = currentSegment.value.minsToSeconds();
-
-            console.log(timeLeft);
+            //take the values from the object (minutes input by the user) and convert the values to seconds
+            totalTime = currentSegment.value.minsToSeconds();       //used by the progress bar
+            timeLeft = currentSegment.value.minsToSeconds();        //used to output the timer on the screen
 
             //set the min and max values for the progress bar
             $gel("progressBarID").setAttribute("aria-valuemin", 0);
@@ -155,11 +157,10 @@ function arrayHelper() {
     else if (timeLeft !== 0) {
         //decrease the seconds
         timeLeft--;
-        console.log(timeLeft);
         
         //get the minutes
         let mins = currentSegment.value.secondsToMins(timeLeft);
-        //format
+        //format the minutes and seconds before outputting to the screen
         if (mins < 10) {
             mins = "0" + mins;
         }
@@ -170,7 +171,7 @@ function arrayHelper() {
             secs = "0" + secs;
         }
 
-        //update the progress bar
+        //update the values in the progress bar
         $gel("progressBarID").setAttribute("aria-valuenow", (totalTime-timeLeft));
         $gel("progressBarID").setAttribute("style", "width:"+((totalTime-timeLeft)/totalTime)*100+"%;");
         

@@ -34,19 +34,6 @@ class TimeSegment {
         }
     }
     
-    /*
-    //seconds
-    get seconds() {
-        return this._seconds;
-    }
-
-    set seconds(newSeconds) {
-        if (newSeconds) {
-            this._seconds = newSeconds;
-        }
-    }
-    */
-
     //create methods to convert minutes to seconds and back
 
     //minutes to seconds

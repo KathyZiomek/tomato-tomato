@@ -4,17 +4,6 @@ function firebaseApp() {
 
     var loginButton = document.getElementById("login");
     loginButton.addEventListener("click", loginWithFirebase, false);
-
-    //var signoutButton = document.getElementById("signout");
-    //signoutButton.addEventListener("click", signoutWithFirebase, false);
-
-    //var saveButton = document.getElementById("save-data-button");
-    //saveButton.addEventListener("click", saveDataWithFirebase, false);
-
-    // hide content when page is first loaded
-    //document.getElementById('login').style.display = 'block';
-    //document.getElementById('register').style.display = 'block';
-    //document.getElementById('main-page').style.display = 'none';
 }
 
 function registerInFirebase() {
@@ -35,9 +24,10 @@ function registerInFirebase() {
         .then(function(firebaseUser) {
             alert('Thank you for registering!\nPlease log in:'); 
 
-            //save the user to the Firebase Database
+            //save the new user to the Firebase Database
             saveDataWithFirebase();
 
+            //re-set the fields so the user has to input them again for security
             $gel('username').value = '';
             $gel('email').value = '';
             $gel('password').value = '';
@@ -47,6 +37,7 @@ function registerInFirebase() {
             var errorCode = error.code;
             var errorMessage = error.message;
 
+            //validation for the entered fields
             if (errorCode == 'auth/weak-password') {
                 alert('The password is too weak.');
             } 
@@ -62,10 +53,12 @@ function registerInFirebase() {
 }
 
 function loginWithFirebase() {
+    //get the user's information from the form fields
     var username = $gel('username').value;  
     var email = $gel('email').value;
     var password = $gel('password').value;
 
+    //have validation for the entered fields
     if (username.length < 4) {
       alert('Please enter a username.');
       return;
@@ -86,7 +79,6 @@ function loginWithFirebase() {
 
             //unhide the logout button now that the user has logged in
             $gel('logoutButton').classList.remove("hiddenClass");
-            //alert('Login successful!'); 
 
         })
         //add validation depending on the error message
@@ -107,28 +99,9 @@ function loginWithFirebase() {
     );
 }
 
-/*
-function signoutWithFirebase() {
-    firebase.auth().signOut().then(function() {
-        // if logout was successful
-        if (!firebase.auth().currentUser) {
-            document.getElementById('login').style.display = 'block';
-            document.getElementById('register').style.display = 'block';
-            document.getElementById('main-page').style.display = 'none';
-            document.getElementById('some-data-textarea').value = '';
-        }
-    });
-    alert('user was logged out!');
-}
-*/
-
+/*Save the user's username to Firebase*/
 function saveDataWithFirebase() {
-    // *********************************************************************
-    // When saving data, to create a new collection you can use SET 
-    // and when updating you can use UPDATE (refer to docs for more info)
-    // -- https://firebase.google.com/docs/firestore/manage-data/add-data
-    // *********************************************************************
-
+    //get the userID
     var userId = firebase.auth().currentUser.uid;
 
     // SAVE DATA TO REALTIME DB
@@ -136,15 +109,12 @@ function saveDataWithFirebase() {
     var database = firebase.database();
 
     database.ref('users/' + userId).set({
-        //test: "test"
+        //save the username to Firebase
         username: $gel('username').value
-        //whenever I want to add something to the Firebase database for storage, add it here
-        //could get information from a textbox and add it with a UID
-        //text: $gel('uid').value
     });
 }
 
-/*create a function that will store the amount of time a user has spent studying in the Firebase database*/
+/*store the amount of time a user has spent studying in the Firebase database*/
 function saveTimeStudiedWithFirebase() {
     var userId = firebase.auth().currentUser.uid;
 
@@ -157,6 +127,7 @@ function saveTimeStudiedWithFirebase() {
     });
 }
 
+/*Retrieve the user's username to display to the screen once they have successfully logged in, and display a button that they can click to begin selecting their studying options*/
 function retrieveDataFromFirebase() {
 
     var userId = firebase.auth().currentUser.uid;
@@ -178,7 +149,8 @@ function retrieveDataFromFirebase() {
     });
 }
 
-//create two functions to return information from the Firebase database
+//create two functions to return information from the Firebase database that will be used along with the local storage
+//return the user's username
 function returnUsernameFromFirebase() {
     //get the user ID
     var userId = firebase.auth().currentUser.uid;
@@ -189,7 +161,7 @@ function returnUsernameFromFirebase() {
     });
 }
 
-//create two functions to return information from the Firebase database
+//return the user's total study time as entered in the prompts
 function returnStudyTimeFromFirebase() {
     //get the user ID
     var userId = firebase.auth().currentUser.uid;

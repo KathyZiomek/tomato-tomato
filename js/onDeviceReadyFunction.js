@@ -1,5 +1,5 @@
 //add an event listener for some functions
-//note: most other functions are called through events
+//note: most other functions are called through events, or are tied to elements that will be dynamically generated, so they cannot be included in the onDeviceReady function
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {

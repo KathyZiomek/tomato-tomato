@@ -1,5 +1,5 @@
 //create a helper function that will assist when identifying an element by its ID
-//this will save space
+//this will save space and repetition in the code
 function $gel(id) {
     return document.getElementById(id);
 }

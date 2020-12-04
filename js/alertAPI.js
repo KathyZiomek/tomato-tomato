@@ -10,7 +10,7 @@ var useStrict = false;
 function chooseStudyOptions() {
     navigator.notification.prompt(
         "How long do you want your study sessions to be? (in minutes)",       //message
-        studyPrompt,                       //callback to invoke
+        studyPrompt,                    //callback to invoke
         "Choose Your Study Time",       //title
         ["Submit", "Cancel"],           //buttonLabels
         "25"                            //defaultText
@@ -26,7 +26,7 @@ function studyPrompt(results) {
     }
     else {
         //tell the user they cancelled
-        alert("Studying cancelled.")
+        alert("Selections cancelled.")
     }
 } 
 
@@ -50,7 +50,7 @@ function breakPrompt(results) {
     }
     else {
         //tell the user they cancelled
-        alert("Studying cancelled.")
+        alert("Selections cancelled.")
     }
 } 
 
@@ -60,8 +60,8 @@ function strictMode() {
     navigator.notification.confirm(
         "Strict Mode sends you reminders if you are trying to use your phone while the study session is active.",       //message
         strictModeResults,                    //callback to invoke
-        "Enable strict mode?",       //title
-        ["Yes", "No"],           //buttonLabels
+        "Enable strict mode?",               //title
+        ["Yes", "No"],                       //buttonLabels
     );
 }
 
@@ -90,9 +90,9 @@ function strictModeResults(buttonIndex) {
 function confirmOptions() {
     navigator.notification.confirm(
         studyTime + " minutes for studying, and " + breakTime + " minutes for breaks",       //message
-        startTimer,                        //callback to invoke
+        startTimer,                         //callback to invoke
         "You selected:",                    //title
-        ["Start Studying", "Cancel"],      //buttonLabels
+        ["Start Studying", "Cancel"],       //buttonLabels
     );
 }
 
@@ -103,6 +103,6 @@ function startTimer(buttonIndex) {
     }
     else {
         //tell the user they cancelled
-        alert("Selection cancelled.")
+        alert("Selections cancelled.")
     }
 }
