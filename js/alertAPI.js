@@ -58,7 +58,7 @@ function breakPrompt(results) {
 //create a function that enables "strict mode" and is connected to the accelerometer function
 function strictMode() {
     navigator.notification.confirm(
-        "Strict Mode sends you a notification if you are picking up your phone while you should be studying.",       //message
+        "Strict Mode sends you reminders if you are trying to use your phone while the study session is active.",       //message
         strictModeResults,                    //callback to invoke
         "Enable strict mode?",       //title
         ["Yes", "No"],           //buttonLabels
@@ -91,20 +91,18 @@ function confirmOptions() {
     navigator.notification.confirm(
         studyTime + " minutes for studying, and " + breakTime + " minutes for breaks",       //message
         startTimer,                        //callback to invoke
-        "You selected",                    //title
+        "You selected:",                    //title
         ["Start Studying", "Cancel"],      //buttonLabels
     );
 }
 
 function startTimer(buttonIndex) {
     if(buttonIndex === 1) {
-        alert("Studying time begins");
-        console.log("it worked");
         //call the createTimes function to create the time objects and begin the timer
         createTimes();
     }
     else {
         //tell the user they cancelled
-        alert("Studying cancelled.")
+        alert("Selection cancelled.")
     }
 }

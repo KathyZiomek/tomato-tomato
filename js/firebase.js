@@ -62,7 +62,7 @@ function registerInFirebase() {
 }
 
 function loginWithFirebase() {
-    var username = $gel('email').value;  
+    var username = $gel('username').value;  
     var email = $gel('email').value;
     var password = $gel('password').value;
 
@@ -81,12 +81,12 @@ function loginWithFirebase() {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(function(firebaseUser) {
-            
             // load data 
             retrieveDataFromFirebase();
-            $gel('choose-study-options').classList.remove("hiddenClass");
-            alert('Login successful!'); 
 
+            //unhide the logout button now that the user has logged in
+            $gel('logoutButton').classList.remove("hiddenClass");
+            //alert('Login successful!'); 
 
         })
         //add validation depending on the error message
@@ -157,20 +157,45 @@ function saveTimeStudiedWithFirebase() {
     });
 }
 
-
 function retrieveDataFromFirebase() {
-    // *********************************************************************
-    // When loading data, you can either fetch the data once like in these examples 
-    // -- https://firebase.google.com/docs/firestore/query-data/get-data
-    // or you can listen to the collection and whenever it is updated on the server
-    // it can be handled automatically by your code
-    // -- https://firebase.google.com/docs/firestore/query-data/listen
-    // *********************************************************************
+
     var userId = firebase.auth().currentUser.uid;
         
     // LOAD DATA FROM REALTIME DB
     firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
         //$gel('uid').value = snapshot.val().text;
-        $gel('loginForm').innerHTML = "Welcome back, " + snapshot.val().username + "!";
+        $gel('loginForm').innerHTML = "<br><p class='mt-3'>Welcome back, " + snapshot.val().username + "!</p>";
+
+        //create a button that will allow the user to input their study options
+        //var buttonsDiv = $gel("buttons");
+        var studyOptionsButton = document.createElement("button");
+        studyOptionsButton.innerText = "Choose Study Options";
+        studyOptionsButton.type = "submit";
+        studyOptionsButton.setAttribute("id", "choose-study-options");
+        studyOptionsButton.setAttribute("onclick", "chooseStudyOptions();");
+        studyOptionsButton.setAttribute("class", "btn btn-danger mt-1");
+        $gel('loginForm').appendChild(studyOptionsButton);
+    });
+}
+
+//create two functions to return information from the Firebase database
+function returnUsernameFromFirebase() {
+    //get the user ID
+    var userId = firebase.auth().currentUser.uid;
+
+    // LOAD DATA FROM REALTIME DB
+    firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+        username = snapshot.val().username;
+    });
+}
+
+//create two functions to return information from the Firebase database
+function returnStudyTimeFromFirebase() {
+    //get the user ID
+    var userId = firebase.auth().currentUser.uid;
+
+    // LOAD DATA FROM REALTIME DB
+    firebase.database().ref('/studyData/' + userId).once('value').then(function(snapshot) {
+        studyTime = parseInt(snapshot.val().timeStudied);
     });
 }

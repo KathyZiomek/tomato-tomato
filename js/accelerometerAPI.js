@@ -51,8 +51,9 @@ function handleMotion(event) {
         }
     }
 
-    $gel("accelerometerAPI").innerHTML = "<p>" + JSON.stringify(accelerationIncludingGravity) +"</p>";
+    //uncomment for testing purposes    
+    //$gel("accelerometerAPI").innerHTML = "<p>" + JSON.stringify(accelerationIncludingGravity) +"</p>";
 }
 
 //create a constant that will output when the user uses their phone during a study session
-const strictModeAlert = "You can't use your phone during strict mode - wait until your next break!";
+const strictModeAlert = "You can't use your phone during strict mode. \nWait until your next break!";

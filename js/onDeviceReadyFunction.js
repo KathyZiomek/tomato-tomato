@@ -1,12 +1,11 @@
+//add an event listener for some functions
+//note: most other functions are called through events
 document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
+    //call the useMedia function to set up the music that will play when a user is studying
     useMedia();
 
-    //add an event listener to the button to select the study and break times
-    var chooseStudyOptionsButton = $gel("choose-study-options");
-    chooseStudyOptionsButton.addEventListener("click", chooseStudyOptions, false);
-
+    //call the firebaseApp which will set up the connection to the Firebase database
     firebaseApp();
-
 }

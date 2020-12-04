@@ -1,9 +1,10 @@
 /*styling for the main page*/
 #mainPage {
-    margin-top: 40%;
+    margin-top: 20%;
 }
 
 /*add an animation keyframe*/
+/*
 @keyframes slideUp { 
 	0% { 
 		transform: translateY(200%);
@@ -12,14 +13,15 @@
 		transform: translateY(0); 
 	} 
 }
-
+*/
 /*adding styling to the login/register form*/
 /*also adding an animation to the login/register form*/
+
 #loginForm {
     width: 60%;
     margin: 0 20% 0 20%;
 
-    animation: 3s ease-out 0s 1 slideUp; 
+    /*animation: 3s ease-out 0s 1 slideUp; */
 
 }
 
@@ -28,5 +30,17 @@
     visibility: hidden;
 }
 
+/*custom styling for the results table*/
+.outputTable {
+	width: 90%;
+	margin: 0 5% 0 5%;
+}
+
+/*custom styling for the progress bar*/
+/*
+.progressBarClass {
+	width: 80%;
+	margin: 0 10% 0 10%;
+}*/
 
 
