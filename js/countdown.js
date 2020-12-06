@@ -25,6 +25,8 @@ function createTimes() {
         $gel("mainPage").classList.add('text-center');
         //empty the output div
         $gel("resultsOutputDiv").innerHTML = "";
+        //clear the totalTimeStudied variable
+        totalTimeStudied = 0;
     }
     //create three Pomodoro cycles
     //future versions of the app can have the number of Pomodoro cycles be selected by the user
@@ -109,6 +111,10 @@ function arrayHelper() {
             //uncomment for testing
             //console.log("iterator is done");
             
+            //reset the progress bar's classes for the next iteration
+            $gel("progressBarID").classList.remove("bg-success");
+            $gel("progressBarID").classList.add("bg-danger");
+
             //hide the progress bar
             $gel("progressBarID").classList.add("hiddenClass");
             $gel("progressBarDiv").classList.add("hiddenClass");
@@ -147,6 +153,18 @@ function arrayHelper() {
             //set the min and max values for the progress bar
             $gel("progressBarID").setAttribute("aria-valuemin", 0);
             $gel("progressBarID").setAttribute("aria-valuemax", totalTime);
+
+            //determine if the progress bar should be green (break session) or red (study session)
+            if (currentSegment.value.type == "Break") {
+                //break: disable strict mode
+                $gel("progressBarID").classList.remove("bg-danger");
+                $gel("progressBarID").classList.add("bg-success");
+            }
+            else if (currentSegment.value.type == "Study Session") {
+                //study session: enable strict mode
+                $gel("progressBarID").classList.remove("bg-success");
+                $gel("progressBarID").classList.add("bg-danger");
+            }
 
             //clear the timer
             stopTimer();

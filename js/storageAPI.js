@@ -132,7 +132,7 @@ function outputDatabaseInfo() {
                             var tableDataText = document.createTextNode(results.rows.item(i).date);
                         }
                         else if (columnsData[j] == "studyTime") {
-                            var tableDataText = document.createTextNode(results.rows.item(i).studyTime);
+                            var tableDataText = document.createTextNode(results.rows.item(i).studyTime + " mins");
                         }
                         //append the text to the cell
                         tableData.appendChild(tableDataText);
